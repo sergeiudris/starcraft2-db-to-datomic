@@ -12,8 +12,11 @@
 (def conn (d/connect db-uri))
 (def db (d/db conn))
 
-(defn respond-hello [request]
+(defn gen-resp []
   {:status 200 :body "Hello, world!"})
+
+(defn respond-hello [request]
+  (gen-resp))
 
 (def routes
   (route/expand-routes
@@ -37,6 +40,11 @@
 
 
 (comment 
+
+  (respond-hello 1)
+
+  (defn gen-resp []
+    {:status 200 :body "Applause!"})
   
   (def  uri "datomic:free://localhost:4334/git")
 

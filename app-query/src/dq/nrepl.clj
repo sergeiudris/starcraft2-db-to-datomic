@@ -10,4 +10,11 @@
   (+ 1 1)
   (+)
   
+  (ns dq.dq)
+  
+  (defn respond-hello [request]
+    {:status 200 :body "applause!"})
+  
+  (dq.dq/respond-hello 1)
+  
   )
