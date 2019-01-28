@@ -1,7 +1,10 @@
 (ns dq.dq
   (:require [datomic.api :as d]
             [io.pedestal.http :as http]
-            [io.pedestal.http.route :as route]))
+            [io.pedestal.http.route :as route]
+            
+            [dq.nrepl]
+            ))
 
 (def  db-uri "datomic:free://datomicdbfree:4334/hello")
 
@@ -28,6 +31,7 @@
 
 (defn -main []
   (prn conn)
+  (dq.nrepl/-main)
   (start))
 
 

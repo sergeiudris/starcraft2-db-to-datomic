@@ -9,6 +9,14 @@ conn(){
   lein repl :connect 0.0.0.0:35543
 }
 
+conn7888(){
+  lein repl :connect 0.0.0.0:7888
+}
+
+start(){
+  lein run
+}
+
 nrepl_cljs(){
   clj -R:nREPL -m nrepl.cmdline --middleware "[cider.piggieback/wrap-cljs-repl]"
 }

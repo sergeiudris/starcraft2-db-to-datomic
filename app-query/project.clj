@@ -5,6 +5,7 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [cider/piggieback "0.3.10"]
                  [figwheel-sidecar "0.5.16"]
+                 [nrepl "0.5.3"]
                  [com.datomic/datomic-free "0.9.5656"]
                  [commons-codec "1.7"]
                  [io.pedestal/pedestal.service       "0.5.5"]
