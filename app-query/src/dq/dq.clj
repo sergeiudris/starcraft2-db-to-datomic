@@ -12,6 +12,8 @@
 (def conn (d/connect db-uri))
 (def db (d/db conn))
 
+
+
 (defn gen-resp []
   {:status 200 :body "Hello, world!"})
 
@@ -37,6 +39,10 @@
   (dq.nrepl/-main)
   (start))
 
+ (defn foo
+   "I don't do a whole lot."
+   [x]
+   (println x "I don't do a whole lot."))
 
 
 (comment 
@@ -44,18 +50,8 @@
   (respond-hello 1)
 
   (defn gen-resp []
-    {:status 200 :body "Applause!"})
+    {:status 200 :body "!Applause!"})
   
-  (def  uri "datomic:free://localhost:4334/git")
-
-  (d/create-database uri)
-
-  (def conn (d/connect uri))
-
-  conn
-
-  (def db (d/db conn))
-
   (d/q '[:find ?e :in $] db)
 
 ; first query!
@@ -81,17 +77,6 @@
                  [?d :code/name ?def]]
                db))
 
-  (defn foo
-    "I don't do a whole lot."
-    [x]
-    (println x "Hello, World!"))
-
-
   (+ 3 4)
-
-; (hello)
-  
-; (h1)
-  
   
   )
