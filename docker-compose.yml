@@ -49,3 +49,26 @@ services:
     tty: true
     depends_on:
       - datomic-free
+
+
+  app-query:
+    image: dq-app-query
+    container_name: dq-app-query
+    volumes:
+      - ./:/opt/code/app
+    build:
+      context: ./app-query
+      dockerfile: ./Dockerfile
+    ports:
+      - 35543:35543
+      - 7988:7888
+    command: tail -f /dev/null
+    # command: bash c nrepl_clj
+    # environment:
+    #   - DISPLAY=10.0.75.1:0.0
+    stdin_open: true
+    tty: true
+    links:
+      - datomicdbfree
+    # depends_on:
+    #   - base
