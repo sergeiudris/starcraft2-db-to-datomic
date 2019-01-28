@@ -62,6 +62,7 @@ services:
     ports:
       - 35543:35543
       - 7988:7888
+      - 8890:8890
     command: tail -f /dev/null
     # command: bash c nrepl_clj
     # environment:
