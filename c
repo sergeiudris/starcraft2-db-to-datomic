@@ -38,7 +38,7 @@ prune(){
 appquery(){
   # docker-compose exec -e TERM clojure sh
   # docker-compose -f datomic.yml exec app-pro sh
-  sh c dc exec app-query bash
+  bash c dc exec app-query bash
 }
 
 

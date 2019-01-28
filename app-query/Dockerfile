@@ -45,9 +45,9 @@ RUN mkdir -p $LEIN_INSTALL \
   && chmod 0755 $LEIN_INSTALL/lein \
   && wget -q https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.zip \
   && wget -q https://github.com/technomancy/leiningen/releases/download/$LEIN_VERSION/leiningen-$LEIN_VERSION-standalone.zip.asc \
-  && gpg --batch --keyserver pool.sks-keyservers.net --recv-key 2B72BF956E23DE5E830D50F6002AF007D1A7CC18 \
-  && echo "Verifying Jar file signature ..." \
-  && gpg --verify leiningen-$LEIN_VERSION-standalone.zip.asc \
+  # && gpg --batch --keyserver pool.sks-keyservers.net --recv-key 2B72BF956E23DE5E830D50F6002AF007D1A7CC18 \
+  # && echo "Verifying Jar file signature ..." \
+  # && gpg --verify leiningen-$LEIN_VERSION-standalone.zip.asc \
   && rm leiningen-$LEIN_VERSION-standalone.zip.asc \
   && mkdir -p /usr/share/java \
   && mv leiningen-$LEIN_VERSION-standalone.zip /usr/share/java/leiningen-$LEIN_VERSION-standalone.jar
@@ -58,6 +58,10 @@ ENV LEIN_ROOT 1
 
 RUN mkdir -p /opt/code/app
 WORKDIR /opt/code/app
+
+# COPY .  /opt/code/app
+COPY project.clj  /opt/code/app
+RUN lein install
 
 EXPOSE 35543
 EXPOSE 4000

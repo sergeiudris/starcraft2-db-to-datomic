@@ -55,7 +55,7 @@ services:
     image: dq-app-query
     container_name: dq-app-query
     volumes:
-      - ./:/opt/code/app
+      - ./app-query:/opt/code/app
     build:
       context: ./app-query
       dockerfile: ./Dockerfile
