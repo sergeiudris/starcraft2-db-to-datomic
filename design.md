@@ -28,5 +28,5 @@ see [concept](./concept.md)
 * ? add graphical representaiton of data (e.g. as graph or list of shapes)
 
 
-### research
+
 
