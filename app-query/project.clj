@@ -11,6 +11,8 @@
                  [io.pedestal/pedestal.service       "0.5.5"]
                  [io.pedestal/pedestal.service-tools "0.5.5"] ;; Only needed for ns-watching; WAR tooling
                  [io.pedestal/pedestal.jetty         "0.5.5"]
+                 [org.clojure/java.jdbc "0.7.8"]
+                 [org.postgresql/postgresql "42.2.5.jre7"]
                 ;  [io.pedestal/pedestal.immutant      "0.5.5"]
                 ;  [io.pedestal/pedestal.tomcat        "0.5.5"]
                 ;  [io.pedestal/pedestal.aws           "0.5.5"]

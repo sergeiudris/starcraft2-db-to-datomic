@@ -4,6 +4,7 @@
             [io.pedestal.http.route :as route]
             
             [dq.nrepl]
+            [dq.psql]
             ))
 
 (def  db-uri "datomic:free://datomicdbfree:4334/hello")
