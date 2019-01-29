@@ -1,5 +1,7 @@
 [
- 
- 
- 
+ {:db/ident :player/id
+  :db/valueType :db.type/long
+  :db/cardinality :db.cardinality/one
+  :db/doc "player id"
+  }
  ]

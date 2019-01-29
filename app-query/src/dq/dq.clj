@@ -4,6 +4,7 @@
             [dq.psql]
             [dq.conn :refer [conn db]]
             [dq.server]
+            [dq.schema]
             ))
 
 (defn -main []

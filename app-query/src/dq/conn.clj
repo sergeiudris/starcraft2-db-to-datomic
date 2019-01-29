@@ -8,6 +8,9 @@
 (def conn (d/connect db-uri))
 (def db (d/db conn))
 
+(defn cdb [] (d/db conn))
+
+
 
 
 (comment
