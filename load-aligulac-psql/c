@@ -1,0 +1,7 @@
+#!/bin/bash
+
+init(){
+    gunzip -c ./data/aligulac.sql.gz | psql -h postgresdb:5432 aligulac
+}
+
+"$@"

@@ -32,4 +32,4 @@ see [concept](./concept.md)
 
 * load-aligulac-psql - use to upload data to postgresdb service (import over network, not CLI)
 * load-aligulac-datomic - use to import data to datomic
-
+* sql schema http://aligulac.com/about/db/
