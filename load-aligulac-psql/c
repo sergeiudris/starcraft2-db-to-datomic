@@ -1,7 +1,8 @@
 #!/bin/bash
+# PGPASSWORD=postgres
 
 init(){
-    gunzip -c ./.data/aligulac.sql.gz | psql -h postgresdb -p 5432 -d aligulac -U aligulac -W postgres 
+    gunzip -c ./.data/aligulac.sql.gz | PGPASSWORD=postgres psql -h postgresdb -p 5432 -d aligulac -U aligulac 
     #  psql -h postgresdb -p 5432 -d aligulac -c  "CREATE ROLE aligulac"
 }
 
