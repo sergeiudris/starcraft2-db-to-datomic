@@ -89,3 +89,51 @@ services:
       ADMINER_DEFAULT_SERVER: postgresdb
     ports:
       - 8787:8080
+
+
+  load-aligulac-psql:
+    image: dq-load-aligulac-psql
+    container_name: dq-load-aligulac-psql
+    volumes:
+      - ./load-aligulac-psql:/opt/code/app
+    build:
+      context: ./load-aligulac-psql
+      dockerfile: ./Dockerfile
+    # ports:
+    #   - 35543:35543
+    #   - 7988:7888
+    #   - 8890:8890
+    command: tail -f /dev/null
+    # command: bash c start
+    # environment:
+    #   - DISPLAY=10.0.75.1:0.0
+    stdin_open: true
+    tty: true
+    links:
+      - postgresdb
+    # depends_on:
+    #   - base
+
+
+  load-aligulac-datomic:
+    image: dq-load-aligulac-datomic
+    container_name: dq-load-aligulac-datomic
+    volumes:
+      - ./load-aligulac-datomic:/opt/code/app
+    build:
+      context: ./load-aligulac-datomic
+      dockerfile: ./Dockerfile
+    # ports:
+    #   - 35543:35543
+    #   - 7988:7888
+    #   - 8890:8890
+    command: tail -f /dev/null
+    # command: bash c start
+    # environment:
+    #   - DISPLAY=10.0.75.1:0.0
+    stdin_open: true
+    tty: true
+    links:
+      - postgresdb
+    # depends_on:
+    #   - base
