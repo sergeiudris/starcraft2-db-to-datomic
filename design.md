@@ -28,5 +28,8 @@ see [concept](./concept.md)
 * ? add graphical representaiton of data (e.g. as graph or list of shapes)
 
 
+### data
 
+* load-aligulac-psql - use to upload data to postgresdb service (import over network, not CLI)
+* load-aligulac-datomic - use to import data to datomic
 
