@@ -34,9 +34,9 @@ services:
     #   context: ./datomic-pro
     #   dockerfile: ./Dockerfile
     ports:
-      - "4436:4336"
-      - "4435:4335"
-      - "4434:4334"
+      - "4536:4336"
+      - "4535:4335"
+      - "4534:4334"
       # - "9000:9000"
     # entrypoint: ./bin/transactor
     command: ./bin/transactor ./config/free-transactor.properties
