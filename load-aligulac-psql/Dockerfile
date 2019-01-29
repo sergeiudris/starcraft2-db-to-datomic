@@ -16,11 +16,13 @@ RUN apt-get update && \
 
 WORKDIR /opt/code/app
 
+# VOLUME . /opt/code/app
+
 # RUN curl http://static.aligulac.com/aligulac.sql.gz -o ./data/aligulac.sql.gz
 # RUN wget http://static.aligulac.com/aligulac.sql.gz -P ./.data 
 RUN wget http://static.aligulac.com/aligulac.sql.gz -P ./.data 
 # RUN wget http://static.aligulac.com/aligulac.sql.gz 
 
-
+ADD c ./
 
 RUN psql --version

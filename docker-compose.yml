@@ -80,7 +80,7 @@ services:
     ports: 
       - 5432:5432
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: aligulac
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: aligulac
 
@@ -96,8 +96,8 @@ services:
   load-aligulac-psql:
     image: dq-load-aligulac-psql
     container_name: dq-load-aligulac-psql
-    volumes:
-      - ./load-aligulac-psql:/opt/code/app
+    # volumes:
+    #   - ./load-aligulac-psql:/opt/code/app
     build:
       context: ./load-aligulac-psql
       dockerfile: ./Dockerfile

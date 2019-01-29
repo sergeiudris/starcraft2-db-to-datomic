@@ -1,7 +1,8 @@
 #!/bin/bash
 
 init(){
-    gunzip -c ./data/aligulac.sql.gz | psql -h postgresdb:5432 aligulac
+    gunzip -c ./.data/aligulac.sql.gz | psql -h postgresdb -p 5432 -d aligulac -U aligulac -W postgres 
+    #  psql -h postgresdb -p 5432 -d aligulac -c  "CREATE ROLE aligulac"
 }
 
 "$@"
