@@ -3,18 +3,29 @@
             [clojure.java.jdbc :as jdbc]
             [dq.nrepl]))
 
-
-(def db-spec 
-  {:dbtype "postgresql"
-   :dbname "aligulac"
-   :user "aligulac"
-   :host "postgresdb"
-   :port 5432
-   :password "postgres"
-   })
-
-(jdbc/query db-spec ["select 3*5 as result"])
-
 (defn hello [] (prn "hello"))
 
-(hello)
+ (def db-spec
+   {:dbtype "postgresql"
+    :dbname "aligulac"
+    :user "aligulac"
+    :host "postgresdb"
+    :port 5432
+    :password "postgres"})
+
+
+
+(comment
+
+
+  (jdbc/query db-spec ["select 3*5 as result"])
+
+  (jdbc/query db-spec ["select * from player where tag = 'Scarlett'"])
+  
+  
+  
+  
+  
+  )
+
+
