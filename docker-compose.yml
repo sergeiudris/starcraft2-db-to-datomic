@@ -60,9 +60,9 @@ services:
       context: ./app-query
       dockerfile: ./Dockerfile
     ports:
-      - 35543:35543
+      - 37543:35543
       - 7988:7888
-      - 8890:8890
+      - 8899:8890
     # command: tail -f /dev/null
     command: bash c start
     # environment:
