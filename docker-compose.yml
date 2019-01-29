@@ -73,3 +73,19 @@ services:
       - datomicdbfree
     # depends_on:
     #   - base
+  
+  postgresdb:
+    image: postgres:11.1
+    # restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: aligulac
+      POSTGRES_PASSWORD: postgres
+
+  adminer:
+    image: adminer
+    # restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: postgresdb
+    ports:
+      - 8787:8080
