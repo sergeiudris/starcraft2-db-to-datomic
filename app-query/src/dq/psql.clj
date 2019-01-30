@@ -30,10 +30,20 @@
    pp/pprint
    )
   
-   (->>
-    (jdbc/query db-spec ["select id from match order by id desc limit 5 offset 5"])
-    pp/pprint
-    )
+  (->>
+   (jdbc/query db-spec ["select id from match order by id desc limit 5 offset 5"])
+   pp/pprint
+   )
+  
+  (count (jdbc/query db-spec ["select * from player order by id "]))
+  (count (jdbc/query db-spec ["select * from match order by id "]))
+  (count (jdbc/query db-spec ["select * from event order by id "]))
+  (count (jdbc/query db-spec ["select * from earnings order  by id "]))
+  
+  
+  
+  
+  
   
   
   )

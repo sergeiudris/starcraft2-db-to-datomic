@@ -13,11 +13,12 @@
   (doc read-string)
   
   
-  
+  ;; load schema
   (def schema (read-string (slurp "resources/schema-aligulac.edn")))
   @(d/transact conn schema)
   
   
+  ;; 
   
   
   
