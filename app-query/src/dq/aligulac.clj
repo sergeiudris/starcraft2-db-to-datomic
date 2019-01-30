@@ -1,7 +1,7 @@
 (ns dq.aligulac
   (:require [datomic.api :as d]
             [clojure.repl :refer :all]
-            [dq.conn :refer [conn db]]
+            [dq.conn :refer [conn db cdb]]
             ))
 
 
@@ -17,8 +17,20 @@
   (def schema (read-string (slurp "resources/schema-aligulac.edn")))
   @(d/transact conn schema)
   
+  ;; load sample data
+  (def sample-data (read-string (slurp "resources/sample-data-aligulac.edn")))
+  @(d/transact conn sample-data)
   
-  ;; 
+  
+  ;; sample queries
+  
+  (d/q '{:find [(pull ?e [*])]
+         :where [
+                 [?e :player/id 23]
+                 ]}
+       (cdb)
+       )
+  
   
   
   

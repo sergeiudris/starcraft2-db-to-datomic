@@ -22,16 +22,33 @@
   (jdbc/query db-spec ["select 3*5 as result"])
 
   (jdbc/query db-spec ["select * from player where tag = 'Scarlett'"])
+  (->>
+   (jdbc/query db-spec ["select * from player where tag = 'Bomber'"])
+   pp/pprint)
 
   (jdbc/query db-spec ["select * from player order by id limit 5 offset 5"])
   
   (->>
-   (jdbc/query db-spec ["select * from player order by id limit 5 offset 5"])
+   (jdbc/query db-spec ["select * from match where plb_id = 23 and pla_id = 12 order by id limit 5 "])
    pp/pprint
    )
+
+  (->>
+   (jdbc/query db-spec ["select * from match where id = 62618 order by id limit 5 "])
+   pp/pprint)  
+  
+  
+   (->>
+    (jdbc/query db-spec ["select * from event where id in (12991,3506) order by id limit 5 "])
+    pp/pprint)
+
   
   (->>
-   (jdbc/query db-spec ["select id from match order by id desc limit 5 offset 5"])
+   (jdbc/query db-spec ["select id from player order by id desc limit 5 offset 5"])
+   pp/pprint
+   )
+  (->>
+   (jdbc/query db-spec ["select * from player order by id desc limit 5 offset 100"])
    pp/pprint
    )
   
@@ -42,6 +59,7 @@
   
   
   
+  *1
   
   
   

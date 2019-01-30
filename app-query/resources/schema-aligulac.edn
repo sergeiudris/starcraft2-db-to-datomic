@@ -9,6 +9,7 @@
  {:db/ident :player/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
+   :db/unique :db.unique/identity
   :db/doc "player id"}
  {:db/ident :player/tag
   :db/valueType :db.type/string
@@ -31,6 +32,7 @@
  {:db/ident :match/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
+   :db/unique :db.unique/identity
   :db/doc "match id"}
  {:db/ident :match/event
   :db/valueType :db.type/string
@@ -94,6 +96,7 @@
  {:db/ident :event/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
+  :db/unique :db.unique/identity 
   :db/doc "event id"}
 
  {:db/ident :event/name
@@ -125,6 +128,7 @@
  {:db/ident :earnings/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
+   :db/unique :db.unique/identity
   :db/doc "earnings id"}
 
  {:db/ident :earnings/event_id
