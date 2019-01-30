@@ -1,5 +1,8 @@
 (ns dq.conn
   (:require [datomic.api :as d]
+            [clojure.pprint :as pp]
+            [clojure.repl :refer :all]
+            
             ))
 
 (def  db-uri "datomic:free://datomicdbfree:4334/hello")
@@ -24,7 +27,7 @@
               :where [?e :repo/uri ?repo]]
             db))
 
-  (map first
+  (map firstf
        (d/q '[:find ?ns
               :where
               [?e :clj/ns ?n]
@@ -44,6 +47,12 @@
   (+ 3 4)
 
   
+  
+  (pp/pprint (keys (ns-publics 'datomic.api)))
+  
+  (doc datomic.api/tempid)
+  
+  (d/tempid :db/user 12)
   
   )
 

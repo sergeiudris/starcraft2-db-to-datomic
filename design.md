@@ -33,3 +33,15 @@ see [concept](./concept.md)
 * load-aligulac-psql - use to upload data to postgresdb service (import over network, not CLI)
 * load-aligulac-datomic - use to import data to datomic
 * sql schema http://aligulac.com/about/db/
+
+
+### extract transfer load (ETL)
+
+* load data from layer,event table (have no refs)
+* generate uuids
+* load to datomic
+* load data from match table, geenrate uuids
+* stop
+* why not use lookup refs ? e.g. [:player/id 23]
+* new plan: load data as is
+* query and assess the need for uuids

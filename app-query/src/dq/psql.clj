@@ -31,7 +31,7 @@
    )
   
    (->>
-    (jdbc/query db-spec ["select id from match order by id limit 5 offset 5"])
+    (jdbc/query db-spec ["select id from match order by id desc limit 5 offset 5"])
     pp/pprint
     )
   
