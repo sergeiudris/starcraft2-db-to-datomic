@@ -17,12 +17,15 @@
 
 (defn player-sql-to-edn 
   [player] 
-  {:player/id (player :id)
-   :player/race (player :race)
-   :player/name (player :name)
-   :player/tag (player :tag)
-   :player/country (player :country)
-   })
+  (->>
+   (identity {:player/id (player :id)
+              :player/race (player :race)
+              :player/name (player :name)
+              :player/tag (player :tag)
+              :player/country (player :country)})
+   (into {} (remove (comp nil? second)))
+   )
+  )
 
 (defn player-data []
   (->>
@@ -34,10 +37,13 @@
 
 
 (comment
+
+
   (pp/pprint (take 5 (player-data)))
   
-   (mapv player-sql-to-edn [])
+  (mapv player-sql-to-edn [])
 
+ (doc identity) 
 
   (jdbc/query db-spec ["select 3*5 as result"])
 

@@ -69,3 +69,18 @@
   
   )
 
+
+(comment
+
+  ;; count all players
+   (->>
+    (d/q '{:find [(count ?e)]
+           :where [[?e :player/id]]}
+         (cdb))
+    ffirst
+    ; pp/pprint
+    )
+ 
+  
+  
+  )
