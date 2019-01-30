@@ -15,7 +15,11 @@
     :password "postgres"})
 
 
-(defn player-sql-to-edn 
+(defn filterm-nil [x] (into {} (remove (comp nil? second)) x))
+
+;; mappers
+
+(defn player->edn 
   [player] 
   (->>
    (identity {:player/id (player :id)
@@ -23,16 +27,42 @@
               :player/name (player :name)
               :player/tag (player :tag)
               :player/country (player :country)})
-   (into {} (remove (comp nil? second)))
+   filterm-nil
+   )
+  )
+
+
+(defn match->edn
+  [x]
+  (->>
+   (identity {:match/id (x :id)
+              :match/event (x :match/event)
+              :match/eventobj_id (x :eventobj_id)
+              :match/pla_id (x :pla_id)
+              :match/plb_id (x :plb_id)
+              :match/sca (x :sca)
+              :match/scb (x :scb)
+              :match/rca (x :rca)
+              :match/rcb (x :rcb)
+              :match/game (x :game)
+              :match/date (x :date)
+              })
+   filterm-nil
    )
   )
 
 (defn player-data []
   (->>
    (jdbc/query db-spec ["select * from player"])
-   (mapv player-sql-to-edn)
+   (mapv player->edn)
    )
 )
+
+(defn match-data []
+  (->>
+   (jdbc/query db-spec ["select * from match limit 91316 offset 200000"])
+   (mapv match->edn))
+  )
 
 
 
@@ -79,6 +109,8 @@
   (count (jdbc/query db-spec ["select * from match order by id "]))
   (count (jdbc/query db-spec ["select * from event order by id "]))
   (count (jdbc/query db-spec ["select * from earnings order  by id "]))
+
+   (jdbc/query db-spec ["select count(*) from match"])
 
 
 

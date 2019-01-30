@@ -25,6 +25,8 @@
   
   ;; load sql data and transact to datomic
   @(d/transact conn (dq.psql/player-data))
+  @(d/transact conn (dq.psql/match-data))
+  
   
   
   

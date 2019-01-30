@@ -61,6 +61,18 @@
        (cdb) (player-id "Scarlett"))
   pp/pprint
    )
+
+  (->>
+  (d/q '{:find [(count ?match )]
+         :in [$ ?player-id]
+         :where [
+                 (or
+                  [?match :match/pla_id ?player-id]
+                  [?match :match/plb_id ?player-id])
+                 ]}
+       (cdb) (player-id "Scarlett"))
+  pp/pprint
+   )
   
   
   ;; find all events Bomber participated in
@@ -81,6 +93,14 @@
     ; pp/pprint
     )
  
+;; count all matches
+   (->>
+    (d/q '{:find [(count ?e)]
+           :where [[?e :match/id]]}
+         (cdb))
+    ffirst
+    ; pp/pprint
+    )
   
   
   )
