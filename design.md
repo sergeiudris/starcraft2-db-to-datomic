@@ -45,3 +45,6 @@ see [concept](./concept.md)
 * why not use lookup refs ? e.g. [:player/id 23]
 * new plan: load data as is
 * query and assess the need for uuids
+* ...
+* querying w/o references makes it same as sql; need references
+* plan: load the data; construct references programmatically
