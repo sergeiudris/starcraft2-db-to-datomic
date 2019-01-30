@@ -5,6 +5,8 @@
             [dq.conn :refer [conn db]]
             [dq.server]
             [dq.schema]
+            [dq.query]
+            [dq.etl]
             ))
 
 (defn -main []
