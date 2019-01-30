@@ -2,6 +2,8 @@
   (:require [datomic.api :as d]
             [clojure.repl :refer :all]
             [clojure.pprint :as pp]
+            
+            [dq.psql]
             [dq.conn :refer [conn db cdb]]
             ))
 
@@ -11,6 +13,7 @@
   (doc slurp)
   (doc read-string)
   
+  (count (dq.psql/player-data))
   
   ;; load schema
   (def schema (read-string (slurp "resources/schema-aligulac.edn")))
@@ -19,6 +22,9 @@
   ;; load sample data
   (def sample-data (read-string (slurp "resources/sample-data-aligulac.edn")))
   @(d/transact conn sample-data)
+  
+  ;; load sql data and transact to datomic
+  @(d/transact conn (dq.psql/player-data))
   
   
   

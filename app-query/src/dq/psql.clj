@@ -15,8 +15,28 @@
     :password "postgres"})
 
 
+(defn player-sql-to-edn 
+  [player] 
+  {:player/id (player :id)
+   :player/race (player :race)
+   :player/name (player :name)
+   :player/tag (player :tag)
+   :player/country (player :country)
+   })
+
+(defn player-data []
+  (->>
+   (jdbc/query db-spec ["select * from player"])
+   (mapv player-sql-to-edn)
+   )
+)
+
+
 
 (comment
+  (pp/pprint (take 5 (player-data)))
+  
+   (mapv player-sql-to-edn [])
 
 
   (jdbc/query db-spec ["select 3*5 as result"])
@@ -27,43 +47,35 @@
    pp/pprint)
 
   (jdbc/query db-spec ["select * from player order by id limit 5 offset 5"])
-  
+
   (->>
    (jdbc/query db-spec ["select * from match where plb_id = 23 and pla_id = 12 order by id limit 5 "])
-   pp/pprint
-   )
+   pp/pprint)
 
   (->>
    (jdbc/query db-spec ["select * from match where id = 62618 order by id limit 5 "])
-   pp/pprint)  
-  
-  
-   (->>
-    (jdbc/query db-spec ["select * from event where id in (12991,3506) order by id limit 5 "])
-    pp/pprint)
+   pp/pprint)
 
-  
+
+  (->>
+   (jdbc/query db-spec ["select * from event where id in (12991,3506) order by id limit 5 "])
+   pp/pprint)
+
+
   (->>
    (jdbc/query db-spec ["select id from player order by id desc limit 5 offset 5"])
-   pp/pprint
-   )
+   pp/pprint)
   (->>
    (jdbc/query db-spec ["select * from player order by id desc limit 5 offset 100"])
-   pp/pprint
-   )
-  
+   pp/pprint)
+
   (count (jdbc/query db-spec ["select * from player order by id "]))
   (count (jdbc/query db-spec ["select * from match order by id "]))
   (count (jdbc/query db-spec ["select * from event order by id "]))
   (count (jdbc/query db-spec ["select * from earnings order  by id "]))
-  
-  
-  
-  *1
-  
-  
-  
-  
-  )
+
+
+
+  *1)
 
 
