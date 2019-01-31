@@ -65,7 +65,8 @@
                    [?match :match/plb_id ?player-id])
                   ]}
         (cdb) (player-id "Scarlett"))
-   pp/pprint
+  ;  pp/pprint
+   count
    )
 
   (->>
@@ -111,6 +112,20 @@
    count
    )
   ; => 402
+  
+  ;; find how many matches of a player were played in event that had earnings
+  (->>
+   (d/q '{:find [(distinct ?match) .]
+          :in [$ ?tag]
+          :where [[?player :player/tag ?tag]
+                  [?earnings :earnings/player ?player]
+                  [?earnings :earnings/eventobj ?event]
+                  [?match :match/eventobj ?event]
+                  ]}
+        (cdb) "Scarlett")
+   count)
+  ; wrong results - Scarlett has 1335 matches and only 145 w/ earnings ?!
+  ; wrong results - Bomber  only 15 w/ earnings ?!
 
   
   
