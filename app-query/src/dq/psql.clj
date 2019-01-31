@@ -2,9 +2,17 @@
   (:require [clojure.repl :refer :all]
             [clojure.java.jdbc :as jdbc]
             [clojure.pprint :as pp]
-            [dq.nrepl]))
+            [dq.nrepl]
+            [dq.query :refer [entity-by-external-id]]
+            ))
 
 (defn hello [] (prn "hello"))
+
+(comment
+  
+  (entity-by-external-id :player/id 23)
+  
+  )
 
  (def db-spec
    {:dbtype "postgresql"
@@ -26,7 +34,8 @@
               :player/race (player :race)
               :player/name (player :name)
               :player/tag (player :tag)
-              :player/country (player :country)})
+              :player/country (player :country)
+              })
    filterm-nil
    )
   )
@@ -46,6 +55,9 @@
               :match/rcb (x :rcb)
               :match/game (x :game)
               :match/date (x :date)
+              :match/pla (entity-by-external-id :player/id (x :pla_id))
+              :match/plb (entity-by-external-id :player/id (x :plb_id))
+              :match/eventobj (entity-by-external-id :event/id (x :eventobj_id))
               })
    filterm-nil
    )
@@ -74,7 +86,8 @@
               :earnings/player_id (x :player_id)
               :earnings/earnings (x :earnings)
               :earnings/placement (x :placement)
-              
+              :earnings/player (entity-by-external-id :player/id (x :player_id))
+              :earnings/eventobj (entity-by-external-id :event/id (x :event_id))
               })
    filterm-nil))
 
@@ -149,7 +162,9 @@
   (count (jdbc/query db-spec ["select * from earnings order  by id "]))
 
   (jdbc/query db-spec ["select count(*) from event"])
-   (jdbc/query db-spec ["select count(*) from earnings"])
+  (count (jdbc/query db-spec ["select *  from match"]))
+  
+  (jdbc/query db-spec ["select count(*) from earnings"])
   
 
 

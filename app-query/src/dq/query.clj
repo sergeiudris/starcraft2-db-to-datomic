@@ -5,6 +5,12 @@
             [dq.conn :refer [conn db cdb]]
             ))
 
+ (defn entity-by-external-id
+   [attribute external-id]
+   (->>
+    (d/pull (cdb) '[:db/id] [attribute external-id])
+    first second))
+
 (comment
   
   ;; sample queries
@@ -109,15 +115,33 @@
    ffirst
     ; pp/pprint
    )
+  
     ;; count all earnings
-   (->>
-    (d/q '{:find [(count ?e)]
-           :where [[?e :earnings/id]]}
-         (cdb))
-    ffirst
+  (->>
+   (d/q '{:find [(count ?e)]
+          :where [[?e :earnings/id]]}
+        (cdb))
+   ffirst
     ; pp/pprint
-    )
+   )
 
+  ;; count matches that have player ref
+  (->>
+   (d/q '{:find [(count ?e)]
+          :where [[?e :match/pla]]}
+        (cdb))
+   ffirst
+    ; pp/pprint
+   )
+
+ ;; count earnings that have eventobj ref
+  (->>
+   (d/q '{:find [(count ?e)]
+          :where [[?e :earnings/eventobj]]}
+        (cdb))
+   ffirst
+    ; pp/pprint
+   )
 
   
   )
