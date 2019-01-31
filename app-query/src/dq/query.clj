@@ -33,7 +33,7 @@
      ffirst
      ))
 
-  (player-id "Scarlett")  
+  (player-id "DongRaeGu")  
   
   ;; find all matches Scarlett played in
   
@@ -126,8 +126,54 @@
    count)
   ; wrong results - Scarlett has 1335 matches and only 145 w/ earnings ?!
   ; wrong results - Bomber  only 15 w/ earnings ?!
-
   
+
+;; find date, event name and opponent name for when Scarlett played Protoss
+  (->>
+   (d/q '{
+          :find [?date ?event-fullname ?opponent-tag]
+          ; :find [?match]
+          :in [$ ?tag]
+          :where [[?player :player/tag ?tag]
+                  [?opponent :player/tag "DongRaeGu"]
+                  (or
+                   (and
+                    [?match :match/pla ?player]
+                    [?match :match/rca "P"]
+                    )
+                   (and
+                    [?match :match/plb ?player]
+                    [?match :match/rcb "P"])
+                   )
+                  (or 
+                   [?match :match/pla ?opponent]
+                   [?match :match/plb ?opponent]
+                   )
+                  [?match :match/date ?date]
+                  [?match :match/eventobj ?event]
+                  [?event :event/fullname ?event-fullname]
+                  [?opponent :player/tag ?opponent-tag]
+                  ; [?match :earnings/eventobj ?event]
+                  ; [?earnings :earnings/eventobj ?event]
+                  ; [?match :match/eventobj ?event]
+                  ]}
+        (cdb) "Scarlett")
+  ;  count
+   first
+   pp/pprint
+   )
+  
+  
+  ;; find dates and event name of matches Bomber 2 Scarlett 1
+  (->>
+   (d/q '{:find [(distinct ?match) .]
+          :in [$ ?tag]
+          :where [[?player :player/tag ?tag]
+                  [?earnings :earnings/player ?player]
+                  [?earnings :earnings/eventobj ?event]
+                  [?match :match/eventobj ?event]]}
+        (cdb) "Scarlett")
+   count)
   
   
   )
