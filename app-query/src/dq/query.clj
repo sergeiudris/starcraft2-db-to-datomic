@@ -57,31 +57,61 @@
   ;      (cdb) [:player/tag "Scarlett"])
   
   (->>
-  (d/q '{:find [(pull ?match [*])]
-         :in [$ ?player-id]
-         :where [
-                 (or
-                  [?match :match/pla_id ?player-id]
-                  [?match :match/plb_id ?player-id])
-                 ]}
-       (cdb) (player-id "Scarlett"))
-  pp/pprint
+   (d/q '{:find [(pull ?match [*])]
+          :in [$ ?player-id]
+          :where [
+                  (or
+                   [?match :match/pla_id ?player-id]
+                   [?match :match/plb_id ?player-id])
+                  ]}
+        (cdb) (player-id "Scarlett"))
+   pp/pprint
    )
 
   (->>
-  (d/q '{:find [(count ?match )]
-         :in [$ ?player-id]
-         :where [
-                 (or
-                  [?match :match/pla_id ?player-id]
-                  [?match :match/plb_id ?player-id])
-                 ]}
-       (cdb) (player-id "Scarlett"))
-  pp/pprint
+   (d/q '{:find [(count ?match )]
+          :in [$ ?player-id]
+          :where [
+                  (or
+                   [?match :match/pla_id ?player-id]
+                   [?match :match/plb_id ?player-id])
+                  ]}
+        (cdb) (player-id "Scarlett"))
+   pp/pprint
    )
   
+  ;; count all mathces bobmber palyed in
+  (->>
+   (d/q '{:find [?match]
+          :in [$ ?tag]
+          :where [[?player :player/tag ?tag]
+                  (or
+                   [?match :match/pla ?player]
+                   [?match :match/plb ?player])
+                  ]
+          }
+        (cdb) "Bomber")
+   count)
+  ; => 583
   
   ;; find all events Bomber participated in
+  (->>
+   (d/q '{:find [(distinct ?event) .]
+          :in [$ ?tag]
+          :where [
+                  [?player :player/tag ?tag]
+                  (or
+                   [?match :match/pla ?player]
+                   [?match :match/plb ?player]
+                   )
+                  [ ?match :match/eventobj ?event ]
+                  ]}
+        (cdb) "Bomber"
+        )
+   count
+   )
+  ; => 402
+
   
   
   
@@ -142,6 +172,7 @@
    ffirst
     ; pp/pprint
    )
+
 
   
   )
