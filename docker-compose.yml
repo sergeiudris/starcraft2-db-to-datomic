@@ -140,3 +140,26 @@ services:
       - postgresdb
     # depends_on:
     #   - base
+
+
+  dockerwheel:
+    image: dq-dockerwheel
+    container_name: dq-dockerwheel
+    volumes:
+      - ./dockerwheel:/clj
+    build:
+      context: ./dockerwheel
+      dockerfile: ./Dockerfile
+    ports:
+      - 3449:3449
+      - 7788:7888
+    # command: tail -f /dev/null
+    command: lein figwheel
+    # environment:
+    #   - DISPLAY=10.0.75.1:0.0
+    stdin_open: true
+    tty: true
+    links:
+      - app-query
+    # depends_on:
+    #   - base
