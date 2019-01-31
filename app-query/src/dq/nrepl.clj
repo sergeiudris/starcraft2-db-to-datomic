@@ -16,5 +16,12 @@
     {:status 200 :body "applause!"})
   
   (dq.dq/respond-hello 1)
+
+  (keys (ns-publics 'clojure.core))
+
+  (doc ->>)
+  
+  (doc ->)
+
   
   )

@@ -8,10 +8,14 @@
 (def  db-uri "datomic:free://datomicdbfree:4334/hello")
 
 (d/create-database db-uri)
-(def conn (d/connect db-uri))
-(def db (d/db conn))
 
+(do
+ (def conn (d/connect db-uri))
+(def db (d/db conn))
 (defn cdb [] (d/db conn))
+ )
+
+
 
 
 

@@ -9,9 +9,42 @@
             ))
 
 
+(defn run-etl []
+  (do
+    (def schema (read-string (slurp "resources/schema-aligulac.edn")))
+    @(d/transact conn schema)
+    @(d/transact conn (dq.psql/player-data))
+
+    @(d/transact conn (dq.psql/event-data 30000 0))
+    @(d/transact conn (dq.psql/event-data 30000 30000))
+    @(d/transact conn (dq.psql/event-data 28689 60000))
+    @(d/transact conn (dq.psql/match-data 30000 0))
+    ; @(d/transact conn (dq.psql/match-data 30000 30000))
+    ; @(d/transact conn (dq.psql/match-data 30000 60000))
+    ; @(d/transact conn (dq.psql/match-data 30000 90000))
+    ; @(d/transact conn (dq.psql/match-data 30000 120000))
+    ; @(d/transact conn (dq.psql/match-data 30000 150000))
+    ; @(d/transact conn (dq.psql/match-data 30000 180000))
+    ; @(d/transact conn (dq.psql/match-data 30000 210000))
+    ; @(d/transact conn (dq.psql/match-data 30000 240000))
+    ; @(d/transact conn (dq.psql/match-data 21316 270000))
+    
+  ; @(d/transact conn (dq.psql/match-data 50000 50000))
+  ; @(d/transact conn (dq.psql/match-data 50000 100000))
+  ; @(d/transact conn (dq.psql/match-data 50000 150000))
+  ; @(d/transact conn (dq.psql/match-data 50000 200000))
+  ; @(d/transact conn (dq.psql/match-data 41316 250000))
+    @(d/transact conn (dq.psql/earnings-data))
+    )
+  )
+
 
 
 (comment
+
+  (doc d/transact)
+
+  (run-etl)
 
   (doc slurp)
   (doc read-string)

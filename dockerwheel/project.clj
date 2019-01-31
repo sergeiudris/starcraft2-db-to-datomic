@@ -9,6 +9,8 @@
   :min-lein-version "2.7.1"
 
   :dependencies [[org.clojure/clojure "1.9.0"]
+                 [cider/piggieback "0.3.10"]
+                 [figwheel-sidecar "0.5.16"]
                  [nrepl "0.5.3"]
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]]
