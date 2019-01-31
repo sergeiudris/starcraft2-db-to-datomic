@@ -25,7 +25,18 @@
   
   ;; load sql data and transact to datomic
   @(d/transact conn (dq.psql/player-data))
-  @(d/transact conn (dq.psql/match-data))
+  
+  @(d/transact conn (dq.psql/match-data 50000 0))
+  @(d/transact conn (dq.psql/match-data 50000 50000))
+  @(d/transact conn (dq.psql/match-data 50000 100000))
+  @(d/transact conn (dq.psql/match-data 50000 150000))
+  @(d/transact conn (dq.psql/match-data 91316 200000))
+  
+  @(d/transact conn (dq.psql/event-data 50000 0))
+  @(d/transact conn (dq.psql/event-data 38689 50000))
+  
+  @(d/transact conn (dq.psql/earnings-data ))
+  
   
   
   

@@ -51,6 +51,35 @@
    )
   )
 
+(defn event->edn 
+  [x]
+  (->>
+   (identity {:event/id (x :id)
+              :event/name (x :name)
+              :event/fullname (x :fullname)
+              :event/big (x :big)
+              :event/type (x :type)
+              :event/prizepool (x :prizepool)
+              }
+             )
+   filterm-nil
+   )
+  )
+
+(defn earnings->edn
+  [x]
+  (->>
+   (identity {:earnings/id (x :id)
+              :earnings/event_id (x :event_id)
+              :earnings/player_id (x :player_id)
+              :earnings/earnings (x :earnings)
+              :earnings/placement (x :placement)
+              
+              })
+   filterm-nil))
+
+
+
 (defn player-data []
   (->>
    (jdbc/query db-spec ["select * from player"])
@@ -58,12 +87,21 @@
    )
 )
 
-(defn match-data []
+(defn match-data [limit offset]
   (->>
-   (jdbc/query db-spec ["select * from match limit 91316 offset 200000"])
+   (jdbc/query db-spec [(str "select * from match limit " limit " offset " offset )])
    (mapv match->edn))
   )
 
+(defn event-data [limit offset]
+  (->>
+   (jdbc/query db-spec [(str "select * from event limit " limit " offset " offset )])
+   (mapv event->edn)))
+
+(defn earnings-data []
+  (->>
+   (jdbc/query db-spec [(str "select * from earnings")])
+   (mapv earnings->edn)))
 
 
 (comment
@@ -73,7 +111,7 @@
   
   (mapv player-sql-to-edn [])
 
- (doc identity) 
+  (doc identity) 
 
   (jdbc/query db-spec ["select 3*5 as result"])
 
@@ -110,7 +148,9 @@
   (count (jdbc/query db-spec ["select * from event order by id "]))
   (count (jdbc/query db-spec ["select * from earnings order  by id "]))
 
-   (jdbc/query db-spec ["select count(*) from match"])
+  (jdbc/query db-spec ["select count(*) from event"])
+   (jdbc/query db-spec ["select count(*) from earnings"])
+  
 
 
 

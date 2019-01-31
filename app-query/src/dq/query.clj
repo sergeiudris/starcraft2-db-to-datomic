@@ -85,22 +85,40 @@
 (comment
 
   ;; count all players
-   (->>
-    (d/q '{:find [(count ?e)]
-           :where [[?e :player/id]]}
-         (cdb))
-    ffirst
+  (->>
+   (d/q '{:find [(count ?e)]
+          :where [[?e :player/id]]}
+        (cdb))
+   ffirst
     ; pp/pprint
-    )
- 
-;; count all matches
-   (->>
-    (d/q '{:find [(count ?e)]
-           :where [[?e :match/id]]}
-         (cdb))
-    ffirst
-    ; pp/pprint
-    )
+   )
   
+;; count all matches
+  (->>
+   (d/q '{:find [(count ?e)]
+          :where [[?e :match/id]]}
+        (cdb))
+   ffirst
+    ; pp/pprint
+   )
+  ;; count all events
+  (->>
+   (d/q '{:find [(count ?e)]
+          :where [[?e :event/id]]}
+        (cdb))
+   ffirst
+    ; pp/pprint
+   )
+    ;; count all earnings
+   (->>
+    (d/q '{:find [(count ?e)]
+           :where [[?e :earnings/id]]}
+         (cdb))
+    ffirst
+    ; pp/pprint
+    )
+
+
   
   )
+
