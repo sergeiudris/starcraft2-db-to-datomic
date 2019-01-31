@@ -164,16 +164,62 @@
    )
   
   
-  ;; find dates and event name of matches Bomber 2 Scarlett 1
+  ;; find date and event name of matches Bomber 2 Scarlett 1 (Homestory Cup)
   (->>
-   (d/q '{:find [(distinct ?match) .]
+   (d/q '{:find [?date ?event-fullname]
           :in [$ ?tag]
-          :where [[?player :player/tag ?tag]
-                  [?earnings :earnings/player ?player]
-                  [?earnings :earnings/eventobj ?event]
-                  [?match :match/eventobj ?event]]}
+          :where [
+                  [?player :player/tag ?tag]
+                  [?opponent :player/tag "Bomber"]
+                  (or
+                   (and
+                    [?match :match/pla ?player]
+                    [?match :match/sca 1])
+                   (and
+                    [?match :match/plb ?player]
+                    [?match :match/scb 1])
+                   )
+                  (or
+                   (and
+                    [?match :match/pla ?player]
+                    [?match :match/plb ?opponent])
+                   (and
+                    [?match :match/plb ?player]
+                    [?match :match/pla ?opponent])
+                   )
+                  [?match :match/date ?date]
+                  [?match :match/eventobj ?event]
+                  [?event :event/fullname ?event-fullname]
+                  ]}
         (cdb) "Scarlett")
-   count)
+  ;  count
+    ; first
+   vec
+   pp/pprint
+   )
+
+
+  
+
+
+  ;; find event names when a player won >= 100000
+  (->>
+   (d/q '{:find [?tag ?event-fullname]
+          :where [
+                  [?earnings :earnings/earnings ?amount]
+                  [(>= ?amount 100000)]
+                  [?earnings :earnings/player ?player]
+                  [?player :player/tag ?tag]
+                  [?earnings :earnings/eventobj ?event]
+                  [?event :event/fullname ?event-fullname]
+                  ; [?match :match/eventobj ?event]
+                  ]}
+        (cdb) )
+  ;  count
+   vec
+   pp/pprint
+   )
+  
   
   
   )
