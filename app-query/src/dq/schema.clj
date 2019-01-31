@@ -74,7 +74,7 @@
              [?e :db/ident ?ident]
              [_ :db.install/attribute ?e]
              [(namespace ?ident) ?ns]
-             [(= ?ns "player")]]
+             [(= ?ns "match")]]
            (cdb)))
 
 ;; find all reference attributes

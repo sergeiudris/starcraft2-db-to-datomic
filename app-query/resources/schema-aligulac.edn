@@ -9,7 +9,7 @@
  {:db/ident :player/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
-   :db/unique :db.unique/identity
+  :db/unique :db.unique/identity
   :db/doc "player id"}
  {:db/ident :player/tag
   :db/valueType :db.type/string
@@ -32,8 +32,9 @@
  {:db/ident :match/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
-   :db/unique :db.unique/identity
+  :db/unique :db.unique/identity
   :db/doc "match id"}
+ 
  {:db/ident :match/event
   :db/valueType :db.type/string
   :db/cardinality :db.cardinality/one
@@ -53,6 +54,7 @@
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
   :db/doc "foreign key to player (player B)"}
+ 
  {:db/ident :match/sca
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
@@ -79,18 +81,18 @@
   :db/cardinality :db.cardinality/one
   :db/doc "when the match was played (often approximate)"}
 
- {:db/ident :match/pla_uuid
+ {:db/ident :match/pla
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
-  :db/doc "uuid (player A)"}
- {:db/ident :match/plb_uuid
+  :db/doc "ref (player A)"}
+ {:db/ident :match/plb
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
-  :db/doc "uuid (player B)"}
- {:db/ident :match/eventobj_uuid
+  :db/doc "ref (player B)"}
+ {:db/ident :match/eventobj
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
-  :db/doc "uuid to event (supercedes event field)"}
+  :db/doc "ref to event (supercedes event field)"}
 
  ;; event
  {:db/ident :event/id
@@ -128,7 +130,7 @@
  {:db/ident :earnings/id
   :db/valueType :db.type/long
   :db/cardinality :db.cardinality/one
-   :db/unique :db.unique/identity
+  :db/unique :db.unique/identity
   :db/doc "earnings id"}
 
  {:db/ident :earnings/event_id
@@ -151,14 +153,14 @@
   :db/cardinality :db.cardinality/one
   :db/doc "place in the event"}
  
- {:db/ident :earnings/event_uuid
+ {:db/ident :earnings/eventobj
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
-  :db/doc "uuid to event"}
+  :db/doc "ref to event"}
 
- {:db/ident :earnings/player_uuid
+ {:db/ident :earnings/player
   :db/valueType :db.type/ref
   :db/cardinality :db.cardinality/one
-  :db/doc "uuid to player"}
+  :db/doc "ref to player"}
  
  ]
