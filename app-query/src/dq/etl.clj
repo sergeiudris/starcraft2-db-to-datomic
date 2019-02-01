@@ -113,16 +113,24 @@
   (page 10 50 (range 100))
   
   (->>
-   (d/q '{; :find [(pull ?match [*])]
-          :find [(dq.etl/page 10 10 ?match)]
-          :in [$  ]
-          :where [
-                  [?match :match/id]
-
-                  ]}
+   (d/q '{
+          :find [?match]
+          ; :find [(pull ?match [*])]
+          ; :find [(dq.etl/page 10 10 ?match)]
+          :in [$]
+          :where [[?match :match/id]]}
         (cdb)  )
-  ;  (take 30)
+   (drop 40)
+   (take 10)
   ;  count
+   )
+
+ (->>
+   (d/q '{
+          :find [(dq.etl/page 10 40 ?match)]
+          :in [$]
+          :where [[?match :match/id]]}
+        (cdb)  )
    )
 
   (defn page-by-attribute [limit offset ?attribute]
