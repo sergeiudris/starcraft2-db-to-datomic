@@ -1,5 +1,7 @@
-### datomic-query.1.cofc.system.20190128 
+### datomic-starcraft
 
-#COFCFAIL
+CofC.system.20190201
 
-> [cofc.system](https://github.com/sergeiudris/cofc.system)
+[cofc.system](https://github.com/sergeiudris/cofc.system)
+
+
