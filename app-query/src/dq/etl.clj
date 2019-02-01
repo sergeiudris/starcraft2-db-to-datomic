@@ -112,6 +112,7 @@
   
   (page 10 50 (range 100))
   
+  ; get 10 matches 
   (->>
    (d/q '{
           :find [?match]
@@ -122,10 +123,13 @@
         (cdb)  )
    (drop 40)
    (take 10)
+  ;  (map  #(str "Hello " % "!")  )
+   (map  #(d/pull (cdb) '[*] (first %)))
+   pp/pprint
   ;  count
    )
 
- (->>
+  (->>
    (d/q '{
           :find [(dq.etl/page 10 40 ?match)]
           :in [$]
@@ -135,9 +139,9 @@
 
   (defn page-by-attribute [limit offset ?attribute]
     '{; :find [(pull ?match [*])]
-     :find [(dq.etl/page limit offset ?match)]
-     :in [$]
-     :where [[?match :match/id]]}
+      :find [(dq.etl/page limit offset ?match)]
+      :in [$]
+      :where [[?match :match/id]]}
     )
   
   (page-by-attribute 10 30 :match/id)
