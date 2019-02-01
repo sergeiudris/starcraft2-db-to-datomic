@@ -94,11 +94,30 @@
 
   (top-20 (range 100))
   
+  (defn paginate [limit offset]
+    (fn [vals] 
+      (->>
+       (drop offset vals)
+       (take limit)
+       )
+      )
+    )
+  
+  ((paginate 10 10) (range 100))
   
   (->>
    (d/q '{
           ; :find [(pull ?match [*])]
           :find [(dq.etl/top-20 ?match)]
+          :where [[?match :match/id]]}
+        (cdb))
+  ;  (take 30)
+  ;  count
+   )
+
+  (->>
+   (d/q '{; :find [(pull ?match [*])]
+          :find [( (dq.etl/paginate 10 10) ?match)]
           :where [[?match :match/id]]}
         (cdb))
   ;  (take 30)
