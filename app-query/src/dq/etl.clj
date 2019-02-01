@@ -124,6 +124,15 @@
   ;  (take 30)
   ;  count
    )
+
+  (defn page-by-attribute [limit offset ?attribute]
+    '{; :find [(pull ?match [*])]
+     :find [(dq.etl/page limit offset ?match)]
+     :in [$]
+     :where [[?match :match/id]]}
+    )
+  
+  (page-by-attribute 10 30 :match/id)
   
   (->>
    (d/query {:query '{; :find [(pull ?match [*])]
