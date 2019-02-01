@@ -3,7 +3,7 @@ services:
 
   datomic-free:
     image: datomic-free
-    container_name: dq-datomic-free
+    # container_name: dq-datomic-free
     # volumes:
     #   - ./.data/transactor:/opt/datomic-pro
     build:
@@ -27,7 +27,7 @@ services:
   datomicdbfree:
     image: datomic-free
     # image: conj_datomicdb
-    container_name: dq-datomicdbfree
+    # container_name: dq-datomicdbfree
     # volumes:
     #   - "./.data/datomicdbfree:/opt/datomic-free/data"
     # build:
@@ -51,9 +51,68 @@ services:
       - datomic-free
 
 
+  datomicdbfreepeer:
+    image: datomic-free
+    # image: conj_datomicdb
+    # container_name: conj-datomicdbpeer
+    # volumes:
+    #   - "./.data/datomicdb:/opt/datomic-pro/data"
+    # build:
+    #   context: ./datomic-pro
+    #   dockerfile: ./Dockerfile
+    # ports:
+    #   - "4336:4336"
+    #   - "4335:4335"
+    #   - "4334:4334"
+      # - "9000:9000"
+    # entrypoint: ./bin/transactor
+    # command: ./bin/transactor ./config/dev-transactor.properties
+    command: dockerize -wait http://create-dbs:8890/health -timeout 360s ./bin/run -m datomic.peer-server -h "0.0.0.0" -p 8998 -a myaccesskey,mysecret -d aligulac,datomic:free://datomicdbfree:4334/aligulac 
+    # command: ./bin/run -m datomic.peer-server -h "0.0.0.0" -p 8998 -a myaccesskey,mysecret -d dayofdatomic,datomic:free://datomicdb:4334/dayofdatomic -d movies,datomic:dev://datomicdb:4334/movies -d tutorial,datomic:dev://datomicdb:4334/tutorial
+    # command: config/dev-transactor.properties
+    # command: tail -f /dev/null
+    # command: bash c nrepl_clj
+    # environment:
+    #   - DISPLAY=10.0.75.1:0.0
+    stdin_open: true
+    tty: true
+    links:
+      - datomicdbfree
+      - create-dbs
+
+
+  create-dbs:
+    image: create-dbs
+    # container_name: conj-create-dbs
+    volumes:
+      - ./create-dbs:/opt/code/app
+    build:
+      context: ./create-dbs
+      dockerfile: ./Dockerfile
+    ports:
+    #   - 35544:35543
+      - 8890:8890
+    command: bash c init
+    # command: tail -f /dev/null
+    # command: bash c nrepl_clj
+    # environment:
+    #   - DISPLAY=10.0.75.1:0.0
+    stdin_open: true
+    tty: true
+    # depends_on:
+    #   - base
+    links:
+      - datomicdbfree
+    healthcheck:
+        test: ["CMD", "curl", "-f", "localhost:8890"]
+        interval: 1s
+        timeout: 0s
+        retries: 100
+
+
   app-query:
     image: dq-app-query
-    container_name: dq-app-query
+    # container_name: dq-app-query
     volumes:
       - ./app-query:/opt/code/app
     build:
@@ -96,7 +155,7 @@ services:
 
   load-aligulac-psql:
     image: dq-load-aligulac-psql
-    container_name: dq-load-aligulac-psql
+    # container_name: dq-load-aligulac-psql
     # volumes:
     #   - ./load-aligulac-psql:/opt/code/app
     build:
@@ -120,7 +179,7 @@ services:
 
   load-aligulac-datomic:
     image: dq-load-aligulac-datomic
-    container_name: dq-load-aligulac-datomic
+    # container_name: dq-load-aligulac-datomic
     volumes:
       - ./load-aligulac-datomic:/opt/code/app
     build:
@@ -144,7 +203,7 @@ services:
 
   dockerwheel:
     image: dq-dockerwheel
-    container_name: dq-dockerwheel
+    # container_name: dq-dockerwheel
     volumes:
       - ./dockerwheel:/clj
     build:

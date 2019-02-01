@@ -124,7 +124,7 @@
   
   (mapv player-sql-to-edn [])
 
-  (doc identity) 
+  (doc defrecord) 
 
   (jdbc/query db-spec ["select 3*5 as result"])
 
