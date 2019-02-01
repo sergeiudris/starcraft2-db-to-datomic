@@ -12,41 +12,37 @@
     first second))
 
 (comment
-  
+
   ;; sample queries
   
   (d/q '{:find [(pull ?e [*])]
-         :where [
-                 [?e :player/id 23]
-                 ]}
-       (cdb)
-       )
+         :where [[?e :player/id 23]]}
+       (cdb))
 
   ;; find player id
-  (defn player-id [tag] 
+  (defn player-id [tag]
     (->>
      (d/q '{:find [?player-id]
             :in [$ ?tag]
             :where [[?e :player/tag ?tag]
                     [?e :player/id ?player-id]]}
           (cdb) tag)
-     ffirst
-     ))
+     ffirst))
 
-  (player-id "DongRaeGu")  
-  
+  (player-id "DongRaeGu")
+
   ;; find all matches Scarlett played in
   
-  (d/q '{:find [(pull ?match [*])]
+  
+
+  (d/q '{
+         :find [(pull ?match [*])]
          :in [$ ?payer-id]
          :where [(or
                   [?match :match/pla_id ?player-id]
-                  [?match :match/plb_id ?player-id])
-                 ]
-         }
-       (cdb) 23
-       )
-  
+                  [?match :match/plb_id ?player-id])]}
+       (cdb) 23)
+
   ; (d/q '{:find [(pull ?match [*])]
   ;        :in [$ ?player]
   ;        :where [
@@ -59,28 +55,22 @@
   (->>
    (d/q '{:find [(pull ?match [*])]
           :in [$ ?player-id]
-          :where [
-                  (or
+          :where [(or
                    [?match :match/pla_id ?player-id]
-                   [?match :match/plb_id ?player-id])
-                  ]}
+                   [?match :match/plb_id ?player-id])]}
         (cdb) (player-id "Scarlett"))
   ;  pp/pprint
-   count
-   )
+   count)
 
   (->>
-   (d/q '{:find [(count ?match )]
+   (d/q '{:find [(count ?match)]
           :in [$ ?player-id]
-          :where [
-                  (or
+          :where [(or
                    [?match :match/pla_id ?player-id]
-                   [?match :match/plb_id ?player-id])
-                  ]}
+                   [?match :match/plb_id ?player-id])]}
         (cdb) (player-id "Scarlett"))
-   pp/pprint
-   )
-  
+   pp/pprint)
+
   ;; count all mathces bobmber palyed in
   (->>
    (d/q '{:find [?match]
@@ -88,9 +78,7 @@
           :where [[?player :player/tag ?tag]
                   (or
                    [?match :match/pla ?player]
-                   [?match :match/plb ?player])
-                  ]
-          }
+                   [?match :match/plb ?player])]}
         (cdb) "Bomber")
    count)
   ; => 583
@@ -99,18 +87,13 @@
   (->>
    (d/q '{:find [(distinct ?event) .]
           :in [$ ?tag]
-          :where [
-                  [?player :player/tag ?tag]
+          :where [[?player :player/tag ?tag]
                   (or
                    [?match :match/pla ?player]
-                   [?match :match/plb ?player]
-                   )
-                  [ ?match :match/eventobj ?event ]
-                  ]}
-        (cdb) "Bomber"
-        )
-   count
-   )
+                   [?match :match/plb ?player])
+                  [?match :match/eventobj ?event]]}
+        (cdb) "Bomber")
+   count)
   ; => 402
   
   ;; find how many matches of a player were played in event that had earnings
@@ -120,8 +103,7 @@
           :where [[?player :player/tag ?tag]
                   [?earnings :earnings/player ?player]
                   [?earnings :earnings/eventobj ?event]
-                  [?match :match/eventobj ?event]
-                  ]}
+                  [?match :match/eventobj ?event]]}
         (cdb) "Scarlett")
    count)
   ; wrong results - Scarlett has 1335 matches and only 145 w/ earnings ?!
@@ -130,8 +112,7 @@
 
 ;; find date, event name and opponent name for when Scarlett played Protoss
   (->>
-   (d/q '{
-          :find [?date ?event-fullname ?opponent-tag]
+   (d/q '{:find [?date ?event-fullname ?opponent-tag]
           ; :find [?match]
           :in [$ ?tag]
           :where [[?player :player/tag ?tag]
@@ -139,16 +120,13 @@
                   (or
                    (and
                     [?match :match/pla ?player]
-                    [?match :match/rca "P"]
-                    )
+                    [?match :match/rca "P"])
                    (and
                     [?match :match/plb ?player]
-                    [?match :match/rcb "P"])
-                   )
-                  (or 
+                    [?match :match/rcb "P"]))
+                  (or
                    [?match :match/pla ?opponent]
-                   [?match :match/plb ?opponent]
-                   )
+                   [?match :match/plb ?opponent])
                   [?match :match/date ?date]
                   [?match :match/eventobj ?event]
                   [?event :event/fullname ?event-fullname]
@@ -160,16 +138,14 @@
         (cdb) "Scarlett")
   ;  count
    first
-   pp/pprint
-   )
-  
-  
+   pp/pprint)
+
+
   ;; find date and event name of matches Bomber 2 Scarlett 1 (Homestory Cup)
   (->>
    (d/q '{:find [?date ?event-fullname]
           :in [$ ?tag]
-          :where [
-                  [?player :player/tag ?tag]
+          :where [[?player :player/tag ?tag]
                   [?opponent :player/tag "Bomber"]
                   (or
                    (and
@@ -177,36 +153,31 @@
                     [?match :match/sca 1])
                    (and
                     [?match :match/plb ?player]
-                    [?match :match/scb 1])
-                   )
+                    [?match :match/scb 1]))
                   (or
                    (and
                     [?match :match/pla ?player]
                     [?match :match/plb ?opponent])
                    (and
                     [?match :match/plb ?player]
-                    [?match :match/pla ?opponent])
-                   )
+                    [?match :match/pla ?opponent]))
                   [?match :match/date ?date]
                   [?match :match/eventobj ?event]
-                  [?event :event/fullname ?event-fullname]
-                  ]}
+                  [?event :event/fullname ?event-fullname]]}
         (cdb) "Scarlett")
   ;  count
     ; first
    vec
-   pp/pprint
-   )
+   pp/pprint)
 
 
-  
+
 
 
   ;; find event names when a player won >= 100000
   (->>
    (d/q '{:find [?tag ?event-fullname]
-          :where [
-                  [?earnings :earnings/earnings ?amount]
+          :where [[?earnings :earnings/earnings ?amount]
                   [(>= ?amount 100000)]
                   [?earnings :earnings/player ?player]
                   [?player :player/tag ?tag]
@@ -214,15 +185,10 @@
                   [?event :event/fullname ?event-fullname]
                   ; [?match :match/eventobj ?event]
                   ]}
-        (cdb) )
+        (cdb))
   ;  count
    vec
-   pp/pprint
-   )
-  
-  
-  
-  )
+   pp/pprint))
 
 
 (comment
@@ -280,6 +246,7 @@
     ; pp/pprint
    )
 
+  (doc d/q)
 
   
   )

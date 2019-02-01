@@ -84,11 +84,33 @@
 
   ;; construct references
   
+  (doc frequencies)
+  (doc sort-by)
+
+  ;; https://docs.datomic.com/on-prem/query.html#custom-aggregates
+  (defn top-20 [vals]
+    (->>
+     (take 20 vals)))
+
+  (top-20 (range 100))
+  
+  
+  (->>
+   (d/q '{
+          ; :find [(pull ?match [*])]
+          :find [(dq.etl/top-20 ?match)]
+          :where [[?match :match/id]]}
+        (cdb))
+  ;  (take 30)
+  ;  count
+   )
+  
   (->>
    (d/q '{:find [(pull ?match [*])]
           :where [[?match :match/id]]}
         (cdb))
   ;  (take 30)
+   top-20
    count)
 
 
