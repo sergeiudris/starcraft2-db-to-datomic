@@ -86,11 +86,18 @@
   
   (doc frequencies)
   (doc sort-by)
+  (doc d/pull)
+  (doc d/query)
+
+
 
   ;; https://docs.datomic.com/on-prem/query.html#custom-aggregates
-  (defn top-20 [vals]
+  (defn page [limit offset vals]
     (->>
-     (take 20 vals)))
+     (drop offset vals)
+     (take limit)
+    ;  first
+     ))
 
   (top-20 (range 100))
   
@@ -103,17 +110,34 @@
       )
     )
   
-  ((paginate 10 10) (range 100))
+  (page 10 50 (range 100))
   
   (->>
-   (d/q '{
-          ; :find [(pull ?match [*])]
-          :find [(dq.etl/top-20 ?match)]
-          :where [[?match :match/id]]}
-        (cdb))
+   (d/q '{; :find [(pull ?match [*])]
+          :find [(dq.etl/page 10 10 ?match)]
+          :in [$  ]
+          :where [
+                  [?match :match/id]
+
+                  ]}
+        (cdb)  )
   ;  (take 30)
   ;  count
    )
+  
+  (->>
+   (d/query {:query '{; :find [(pull ?match [*])]
+                      :find [(dq.etl/top-20 ?match)]
+                      :in [$ ?offset ?limit]
+                      :where [[?match :match/id]]}
+             :args [(cdb) 10 10]
+             }
+            )
+  ;  (take 30)
+  ;  count
+   )
+
+  
 
   (->>
    (d/q '{; :find [(pull ?match [*])]
