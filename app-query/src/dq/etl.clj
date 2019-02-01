@@ -87,6 +87,9 @@
   (doc frequencies)
   (doc sort-by)
   (doc d/pull)
+  (doc d/touch)
+  (doc d/entity)
+
   (doc d/query)
 
 
@@ -124,10 +127,12 @@
    (drop 40)
    (take 10)
   ;  (map  #(str "Hello " % "!")  )
-   (map  #(d/pull (cdb) '[*] (first %)))
+   (map  #( vector (d/pull (cdb) '[*] (first %)) (d/entity (cdb) (first %)) ))
    pp/pprint
   ;  count
    )
+
+(vector 1 2)
 
   (->>
    (d/q '{
