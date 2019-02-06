@@ -12,5 +12,6 @@
 (defn -main []
   (prn conn)
   (dq.nrepl/-main)
+  (dq.etl/run-etl)
   (dq.server/start))
 
