@@ -246,6 +246,17 @@
     ; pp/pprint
    )
 
+
+ ;; count distinct event fullnames
+  (->>
+   (d/q '{:find [(count-distinct ?fullname)]
+          :where [[?e :event/fullname ?fullname]]}
+        (cdb))
+   ffirst
+    ; pp/pprint
+   )
+
+  
   (doc d/q)
 
   

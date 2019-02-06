@@ -89,9 +89,9 @@ services:
     build:
       context: ./create-dbs
       dockerfile: ./Dockerfile
-    ports:
+    # ports:
     #   - 35544:35543
-      - 8890:8890
+      # - 8890:8890
     command: bash c init
     # command: tail -f /dev/null
     # command: bash c nrepl_clj
@@ -210,8 +210,8 @@ services:
       context: ./dockerwheel
       dockerfile: ./Dockerfile
     ports:
-      - 3449:3449
-      - 7788:7888
+      - 3459:3449
+      - 7979:7888
     # command: tail -f /dev/null
     command: lein figwheel
     # environment:
